@@ -42,8 +42,16 @@ public class RequestResultService
 
             var returnPingResult = await _httpClient.GetAsync($"{merakiApiConfiguration.BaseAddress}/{device}/liveTools/ping/{returnRequestPing.PingId}");
 
-
             var content = await returnPingResult.Content.ReadAsStringAsync();
+
+            var running = JsonDocument.Parse(content).RootElement.GetProperty("status").ToString();
+
+            if (running == "running")
+            {
+                await Task.Delay(30000);
+                returnPingResult = await _httpClient.GetAsync($"{merakiApiConfiguration.BaseAddress}/{device}/liveTools/ping/{returnRequestPing.PingId}");
+                content = await returnPingResult.Content.ReadAsStringAsync();
+            }
 
             var averageLatency = JsonDocument.Parse(content).RootElement.GetProperty("results").GetProperty("latencies").GetProperty("average").ValueKind;
 
@@ -52,7 +60,6 @@ public class RequestResultService
                 var result = JsonSerializer.Deserialize<ReturnResultPing>(content, _jsonSerializerOptions);
                 return result!;
             }
-
         }
         catch (Exception ex)
         {
