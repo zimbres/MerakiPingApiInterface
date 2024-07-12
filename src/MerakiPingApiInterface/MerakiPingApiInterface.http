@@ -1,0 +1,9 @@
+@MerakiPingApiInterface_HostAddress = http://localhost:33143
+
+GET {{MerakiPingApiInterface_HostAddress}}/
+Accept: application/json
+###
+
+GET {{MerakiPingApiInterface_HostAddress}}/Ping?deviceSerial=Q234-ABCD-5678&target=1.1.1.1
+Accept: application/json
+###
