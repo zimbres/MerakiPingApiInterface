@@ -4,9 +4,9 @@ namespace MerakiPingApiInterface.Controllers;
 [Route("/")]
 public class HealthController : ControllerBase
 {
-    private readonly ILogger<PingController> _logger;
+    private readonly ILogger<HealthController> _logger;
 
-    public HealthController(ILogger<PingController> logger)
+    public HealthController(ILogger<HealthController> logger)
     {
         _logger = logger;
     }
